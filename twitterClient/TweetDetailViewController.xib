@@ -42,7 +42,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="screenName" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="toV-GG-boh">
-                    <rect key="frame" x="73" y="92" width="150" height="12"/>
+                    <rect key="frame" x="73" y="93" width="150" height="12"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="150" id="VUV-Ki-zN4"/>
@@ -121,11 +121,11 @@
                 <constraint firstItem="onf-Ku-uPe" firstAttribute="leading" secondItem="Y9A-eB-tc8" secondAttribute="trailing" constant="12" id="Iza-c6-t6g"/>
                 <constraint firstItem="gfx-Kl-daN" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="78" id="OUl-HH-acM"/>
                 <constraint firstItem="gfx-Kl-daN" firstAttribute="leading" secondItem="z7C-Rv-NyP" secondAttribute="trailing" constant="11" id="Q7E-Cn-ODT"/>
-                <constraint firstItem="lAe-0i-FmU" firstAttribute="top" secondItem="toV-GG-boh" secondAttribute="bottom" constant="15" id="ZTN-g4-l85"/>
+                <constraint firstItem="lAe-0i-FmU" firstAttribute="top" secondItem="toV-GG-boh" secondAttribute="bottom" constant="14" id="ZTN-g4-l85"/>
                 <constraint firstAttribute="trailing" secondItem="Y0H-2E-NW7" secondAttribute="trailing" constant="12" id="dwI-BM-acC"/>
                 <constraint firstItem="lAe-0i-FmU" firstAttribute="leading" secondItem="z7C-Rv-NyP" secondAttribute="trailing" constant="11" id="eTc-fV-mQp"/>
                 <constraint firstItem="Y0H-2E-NW7" firstAttribute="top" secondItem="z7C-Rv-NyP" secondAttribute="bottom" constant="12" id="fOF-xx-Baj"/>
-                <constraint firstItem="toV-GG-boh" firstAttribute="top" secondItem="gfx-Kl-daN" secondAttribute="bottom" constant="3" id="gt0-o6-ZYL"/>
+                <constraint firstItem="toV-GG-boh" firstAttribute="top" secondItem="gfx-Kl-daN" secondAttribute="bottom" constant="4" id="gt0-o6-ZYL"/>
                 <constraint firstItem="toV-GG-boh" firstAttribute="leading" secondItem="z7C-Rv-NyP" secondAttribute="trailing" constant="11" id="kke-4a-YZZ"/>
                 <constraint firstItem="z7C-Rv-NyP" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="12" id="mFZ-kj-Htu"/>
                 <constraint firstItem="Y0H-2E-NW7" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="p9r-aj-1bN"/>
