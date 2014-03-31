@@ -8,6 +8,7 @@
 
 #import "TweetCell.h"
 #import "UIImageView+AFNetworking.h"
+#import "Tweet.h"
 
 @implementation TweetCell
 
@@ -23,46 +24,18 @@
     // Configure the view for the selected state
 }
 
--(void)setValuesWithTweet:(id)tweet {
+-(void)setValuesWithTweet:(Tweet *)tweet {
 
-    self.screenName.text = [NSString stringWithFormat:@"@%@", tweet[@"user"][@"screen_name"]];
+    self.screenName.text = [NSString stringWithFormat:@"@%@", tweet.data[@"user"][@"screen_name"]];
     
-    self.name.text = tweet[@"user"][@"name"];
+    self.name.text = tweet.data[@"user"][@"name"];
     
-    self.tweetText.text = tweet[@"text"];
+    self.tweetText.text = tweet.data[@"text"];
     
-    [self.profileImage setImageWithURL:[NSURL URLWithString:tweet[@"user"][@"profile_image_url"]] placeholderImage:[UIImage imageNamed:self.name.text]];
+    [self.profileImage setImageWithURL:[NSURL URLWithString:tweet.data[@"user"][@"profile_image_url"]] placeholderImage:[UIImage imageNamed:self.name.text]];
     
-    self.date.text = [self formatDateWithString:tweet[@"created_at"]];
+    self.date.text = [tweet relativeTime];//[self formatDateWithString:tweet.data[@"created_at"]];
 
-}
-
--(NSString *) formatDateWithString:(NSString *)createdAt {
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"eee MMM dd HH:mm:ss ZZZZ yyyy"];
-    NSDate *date = [dateFormatter dateFromString:createdAt];
-    NSDate *now = [NSDate date];
-    double interval = [date timeIntervalSinceDate:now];
-    NSString *dateString;
-    interval = interval * -1;
-    if (interval < 1) {
-    	dateString = @"just now";
-    } else 	if (interval < 60) {
-    	dateString = @"1m";
-    } else if (interval < 3600) {
-    	int diff = round(interval / 60);
-    	dateString = [NSString stringWithFormat:@"%dm", diff];
-    } else if (interval < 86400) {
-    	int diff = round(interval / 60 / 60);
-    	dateString = [NSString stringWithFormat:@"%dh", diff];
-    } else if (interval < 2629743) {
-    	int diff = round(interval / 60 / 60 / 24);
-    	dateString = [NSString stringWithFormat:@"%d days ago", diff];
-    } else {
-    	dateString = @"unknown";
-    }
-    
-    return dateString;
 }
 
 @end

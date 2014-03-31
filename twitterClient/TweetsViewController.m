@@ -80,9 +80,12 @@ NSMutableArray * tweets;
     
     TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:CELL_IDENTIFIER forIndexPath:indexPath];
     
-    id tweet = tweets[indexPath.row];
+    Tweet * tweet = tweets[indexPath.row];
     
-    [cell setValuesWithTweet:tweet];
+    if (tweet) {
+        [cell setValuesWithTweet:tweet];        
+    }
+
     
     return cell;
 }
@@ -93,8 +96,8 @@ NSMutableArray * tweets;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    id tweet = tweets[indexPath.row];
-    NSString* text = [NSString stringWithFormat:@"%@",tweet[@"text"]];
+    Tweet * tweet = tweets[indexPath.row];
+    NSString* text = [NSString stringWithFormat:@"%@",tweet.data[@"text"]];
     UIFont *font = [UIFont boldSystemFontOfSize: 11];
     CGRect rect = [text boundingRectWithSize:CGSizeMake(TEXT_LABEL_WIDTH, MAXFLOAT)
                                                   options:NSStringDrawingUsesLineFragmentOrigin
@@ -134,9 +137,9 @@ NSMutableArray * tweets;
 -(void)homeTimeline{
     [[TwitterClient instance] homeTimelineWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         //NSLog(@"response: %@", responseObject);
-        tweets = responseObject;
-        //tweets = [Tweet tweetsArray:responseObject];
-        NSLog(@"tweets: %@", tweets);
+        //tweets = responseObject;
+        tweets = [Tweet tweetsArray:responseObject];
+        //NSLog(@"tweets: %@", tweets);
         [self.tweetsTableView reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Failure getting tweets");

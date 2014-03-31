@@ -18,7 +18,7 @@ UIBarButtonItem *tweetButton;
 @property (weak, nonatomic) IBOutlet UILabel *name;
 @property (weak, nonatomic) IBOutlet UIImageView *profileImage;
 
-@property (nonatomic,weak) NSDictionary *tweetData;
+@property (nonatomic,weak) Tweet *tweet;
 
 @end
 
@@ -33,10 +33,10 @@ UIBarButtonItem *tweetButton;
     return self;
 }
 
-- (id)initWithExistingTweet:(NSDictionary *)tweetData {
+- (id)initWithExistingTweet:(Tweet *)tweet {
     self = [super init];
     if (self) {
-        self.tweetData = tweetData;
+        self.tweet = tweet;
     }
     
     return self;
@@ -48,6 +48,7 @@ UIBarButtonItem *tweetButton;
     // Do any additional setup after loading the view from its nib.
     
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    
     // add tweet button
     tweetButton = [[UIBarButtonItem alloc] initWithTitle:@"Tweet!" style:UIBarButtonItemStyleDone target:self action:@selector(onTweet:)];
     self.navigationItem.rightBarButtonItem = tweetButton;
@@ -60,9 +61,9 @@ UIBarButtonItem *tweetButton;
     self.textArea.textContainer.lineFragmentPadding = 0;
     self.textArea.textContainerInset = UIEdgeInsetsZero;
     // replying to tweet
-    if (self.tweetData != nil)
+    if (self.tweet != nil)
     {
-        self.textArea.text = [NSString stringWithFormat:@"@%@ ", self.tweetData[@"user"][@"screen_name"]];
+        self.textArea.text = [NSString stringWithFormat:@"@%@ ", self.tweet.data[@"user"][@"screen_name"]];
     }
     // composing a new tweet
     else {

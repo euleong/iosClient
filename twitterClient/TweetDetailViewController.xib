@@ -6,6 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TweetDetailViewController">
             <connections>
+                <outlet property="date" destination="lAe-0i-FmU" id="cpr-q5-a0B"/>
                 <outlet property="favoriteButton" destination="onf-Ku-uPe" id="86P-AU-0rU"/>
                 <outlet property="name" destination="gfx-Kl-daN" id="eGW-zh-89T"/>
                 <outlet property="profileImage" destination="z7C-Rv-NyP" id="HPK-GH-tgs"/>
@@ -99,6 +100,17 @@
                         <action selector="onFavorite:" destination="-1" eventType="touchUpInside" id="KVk-bd-nTF"/>
                     </connections>
                 </button>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lAe-0i-FmU">
+                    <rect key="frame" x="73" y="119" width="150" height="11"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="150" id="HHQ-CH-qCB"/>
+                        <constraint firstAttribute="height" constant="11" id="O0L-Cm-1Lt"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
@@ -109,7 +121,9 @@
                 <constraint firstItem="onf-Ku-uPe" firstAttribute="leading" secondItem="Y9A-eB-tc8" secondAttribute="trailing" constant="12" id="Iza-c6-t6g"/>
                 <constraint firstItem="gfx-Kl-daN" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="78" id="OUl-HH-acM"/>
                 <constraint firstItem="gfx-Kl-daN" firstAttribute="leading" secondItem="z7C-Rv-NyP" secondAttribute="trailing" constant="11" id="Q7E-Cn-ODT"/>
+                <constraint firstItem="lAe-0i-FmU" firstAttribute="top" secondItem="toV-GG-boh" secondAttribute="bottom" constant="15" id="ZTN-g4-l85"/>
                 <constraint firstAttribute="trailing" secondItem="Y0H-2E-NW7" secondAttribute="trailing" constant="12" id="dwI-BM-acC"/>
+                <constraint firstItem="lAe-0i-FmU" firstAttribute="leading" secondItem="z7C-Rv-NyP" secondAttribute="trailing" constant="11" id="eTc-fV-mQp"/>
                 <constraint firstItem="Y0H-2E-NW7" firstAttribute="top" secondItem="z7C-Rv-NyP" secondAttribute="bottom" constant="12" id="fOF-xx-Baj"/>
                 <constraint firstItem="toV-GG-boh" firstAttribute="top" secondItem="gfx-Kl-daN" secondAttribute="bottom" constant="3" id="gt0-o6-ZYL"/>
                 <constraint firstItem="toV-GG-boh" firstAttribute="leading" secondItem="z7C-Rv-NyP" secondAttribute="trailing" constant="11" id="kke-4a-YZZ"/>

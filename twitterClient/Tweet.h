@@ -13,5 +13,7 @@
 @property (nonatomic, assign) BOOL retweeted;
 @property (nonatomic, strong) NSDictionary *data;
 
-//+ (NSMutableArray *)tweetsArray:(NSArray *)array;
++ (NSMutableArray *)tweetsArray:(NSArray *)array;
+-(NSString *)relativeTime;
+-(NSString *)absoluteDate;
 @end

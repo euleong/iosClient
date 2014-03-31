@@ -10,6 +10,6 @@
 #import "Tweet.h"
 
 @interface NewTweetViewController : UIViewController
-- (id)initWithExistingTweet:(NSDictionary *)tweetData;
+- (id)initWithExistingTweet:(Tweet *)tweet;
 
 @end

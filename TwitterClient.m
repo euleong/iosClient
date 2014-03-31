@@ -8,6 +8,7 @@
 
 #import "TwitterClient.h"
 #import "User.h"
+#import "Tweet.h"
 
 static NSString * const accessTokenKey = @"accessTokenKey";
 
@@ -60,11 +61,11 @@ static NSString * const accessTokenKey = @"accessTokenKey";
     
 }
 
-- (void)favorite:(id)tweet success:(void (^)(AFHTTPRequestOperation *operation, id response))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
+- (void)favorite:(Tweet *)tweet success:(void (^)(AFHTTPRequestOperation *operation, id response))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
     
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithDictionary:@{@"id": tweet[@"id"]}];
-    if ([tweet[@"favorited"] boolValue])
-    //if ()
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithDictionary:@{@"id": tweet.data[@"id"]}];
+    //if ([tweet[@"favorited"] boolValue])
+    if (tweet.favorited)
     {
         [self POST:@"1.1/favorites/destroy.json" parameters:parameters success:success failure:failure];
     }

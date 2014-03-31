@@ -16,7 +16,7 @@
 - (IBAction)onRetweet:(id)sender;
 - (IBAction)onReply:(id)sender;
 
-@property (weak, nonatomic) id tweet;
+@property (weak, nonatomic) Tweet *tweet;
 @property (weak, nonatomic) IBOutlet UIImageView *profileImage;
 @property (weak, nonatomic) IBOutlet UILabel *name;
 @property (weak, nonatomic) IBOutlet UILabel *screenName;
@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *replyButton;
 @property (weak, nonatomic) IBOutlet UIButton *retweetButton;
 @property (weak, nonatomic) IBOutlet UIButton *favoriteButton;
+@property (weak, nonatomic) IBOutlet UILabel *date;
 @end
 
 @implementation TweetDetailViewController
@@ -54,14 +55,15 @@
     
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     
-    self.name.text = self.tweet[@"user"][@"name"];
-    //self.name.text = self.tweet[@"user"][@"name"];
-    self.screenName.text = [NSString stringWithFormat:@"@%@",self.tweet[@"user"][@"screen_name"]];
-    self.tweetText.text = self.tweet[@"text"];
-    [self.profileImage setImageWithURL:[NSURL URLWithString:self.tweet[@"user"][@"profile_image_url"]] placeholderImage:[UIImage imageNamed:self.name.text]];
+    self.name.text = self.tweet.data[@"user"][@"name"];
+    self.screenName.text = [NSString stringWithFormat:@"@%@",self.tweet.data[@"user"][@"screen_name"]];
+    self.tweetText.text = self.tweet.data[@"text"];
+    [self.profileImage setImageWithURL:[NSURL URLWithString:self.tweet.data[@"user"][@"profile_image_url"]] placeholderImage:[UIImage imageNamed:self.name.text]];
+    self.date.text = [self.tweet absoluteDate];
     
-    //self.tweet.favorited = [self.tweet.data[@"favorited"] boolValue];
-    //self.tweet.retweeted = [self.tweet.data[@"retweeted"] boolValue];
+    self.tweet.favorited = [self.tweet.data[@"favorited"] boolValue];
+    self.tweet.retweeted = [self.tweet.data[@"retweeted"] boolValue];
+    
     [self setFavoriteIcon];
     [self setRetweetIcon];
 
@@ -77,7 +79,7 @@
 - (IBAction)onFavorite:(id)sender {
     [[TwitterClient instance] favorite:self.tweet success:^(AFHTTPRequestOperation *operation, id response) {
         NSLog(@"Favorited/Unfavorited!");
-        //self.tweet.favorited = !self.tweet.favorited;
+        self.tweet.favorited = !self.tweet.favorited;
         [self setFavoriteIcon];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -87,15 +89,20 @@
 
 - (IBAction)onRetweet:(id)sender {
 
-    [[TwitterClient instance] retweetWithId:self.tweet[@"id"] success:^(AFHTTPRequestOperation *operation, id response) {
-        NSLog(@"Retweeted!");
-        // retweeted = !retweeted;
-        // api doesn't have un-retweet?
-        //self.tweet.retweeted = true;
-        [self setRetweetIcon];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Already retweeted or failure in retweeting");
-    }];
+    // api doesn't have un-retweet?
+    if (!self.tweet.retweeted) {
+        [[TwitterClient instance] retweetWithId:self.tweet.data[@"id"] success:^(AFHTTPRequestOperation *operation, id response) {
+            NSLog(@"Retweeted!");
+            self.tweet.retweeted = true;
+            [self setRetweetIcon];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"Failure in retweeting");
+        }];
+        
+    }
+    else {
+        NSLog(@"Already retweeted!");
+    }
 
 }
 
@@ -106,8 +113,7 @@
 }
 
 - (void)setFavoriteIcon{
-    if ([self.tweet[@"favorited"] boolValue]) {
-    //if (self.tweet.favorited) {
+    if (self.tweet.favorited) {
         [self.favoriteButton setImage:[UIImage imageNamed:@"favorite_on"] forState:UIControlStateNormal];
     }
     else {
@@ -116,8 +122,7 @@
 }
 
 - (void)setRetweetIcon {
-    if ([self.tweet[@"retweeted"] boolValue]) {
-    //if (self.tweet.retweeted) {
+    if (self.tweet.retweeted) {
         [self.retweetButton setImage:[UIImage imageNamed:@"retweet_on"] forState:UIControlStateNormal];
     }
     else {
