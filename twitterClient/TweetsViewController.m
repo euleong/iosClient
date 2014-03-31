@@ -143,6 +143,8 @@ NSMutableArray * tweets;
         [self.tweetsTableView reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Failure getting tweets");
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Failure:" message:@"Could not get tweets!" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:nil];
+        [alert show];
     }];
 
 }

@@ -8,7 +8,6 @@
 
 #import "TwitterClient.h"
 #import "User.h"
-#import "Tweet.h"
 
 static NSString * const accessTokenKey = @"accessTokenKey";
 
@@ -75,12 +74,22 @@ static NSString * const accessTokenKey = @"accessTokenKey";
     }
 }
 
-- (void)retweetWithId:(NSString *)id success:(void (^)(AFHTTPRequestOperation *operation, id response))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
+- (void)retweet:(Tweet *)tweet success:(void (^)(AFHTTPRequestOperation *operation, id response))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
     
+    NSString *id = tweet.data[@"id"];
     NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithDictionary:@{@"id": id}];
     
-    NSString *retweetPath = [NSString stringWithFormat:@"1.1/statuses/retweet/%@.json", id];
-    [self POST:retweetPath parameters:parameters success:success failure:failure];
+    if (tweet.retweeted)
+    {
+        NSString *unRetweetPath = [NSString stringWithFormat:@"1.1/statuses/destroy/%@.json", id];
+        [self POST:unRetweetPath parameters:parameters success:success failure:failure];
+    }
+    else
+    {
+        NSString *retweetPath = [NSString stringWithFormat:@"1.1/statuses/retweet/%@.json", id];
+        [self POST:retweetPath parameters:parameters success:success failure:failure];
+    }
+
 }
 
 - (void) requestAccessTokenWithURL:(NSURL *)url {

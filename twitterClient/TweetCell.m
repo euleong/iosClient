@@ -15,6 +15,10 @@
 - (void)awakeFromNib
 {
     // Initialization code
+    self.screenName.text = @"";
+    self.name.text = @"";
+    self.date.text = @"";
+    self.tweetText.text     = @"";
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

@@ -89,20 +89,22 @@
 
 - (IBAction)onRetweet:(id)sender {
 
-    // api doesn't have un-retweet?
-    if (!self.tweet.retweeted) {
-        [[TwitterClient instance] retweetWithId:self.tweet.data[@"id"] success:^(AFHTTPRequestOperation *operation, id response) {
-            NSLog(@"Retweeted!");
-            self.tweet.retweeted = true;
+    // unretweet not working...
+    if (!self.tweet.retweeted)
+    {
+        [[TwitterClient instance] retweet:self.tweet success:^(AFHTTPRequestOperation *operation, id response) {
+            NSLog(@"Retweeted/Unretweeted!");
+            self.tweet.retweeted = !self.tweet.retweeted;
             [self setRetweetIcon];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"Failure in retweeting");
+            NSLog(@"Failure in retweeting/unretweeting: %@", [error description]);
         }];
-        
     }
-    else {
-        NSLog(@"Already retweeted!");
+    else
+    {
+        NSLog(@"Already retweeted");
     }
+
 
 }
 

@@ -69,9 +69,12 @@ UIBarButtonItem *tweetButton;
     else {
         self.textArea.text = @"";
     }
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    // moved here so keyboard appears after view appears
     [self.textArea becomeFirstResponder];
-    
-    
 }
 
 - (void)didReceiveMemoryWarning
