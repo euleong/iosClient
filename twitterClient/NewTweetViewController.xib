@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NewTweetViewController">
+            <connections>
+                <outlet property="name" destination="nbu-ab-OSb" id="s4G-mi-ucl"/>
+                <outlet property="profileImage" destination="aRO-ha-PBx" id="Hr6-9J-SFY"/>
+                <outlet property="screenName" destination="IF3-g0-bMu" id="hlb-qW-U3K"/>
+                <outlet property="textArea" destination="PkY-3L-cHY" id="cbj-i7-zc9"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aRO-ha-PBx">
+                    <rect key="frame" x="12" y="80" width="50" height="50"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="50" id="NZj-rX-C1q"/>
+                        <constraint firstAttribute="height" constant="50" id="VOT-uw-H82"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nbu-ab-OSb">
+                    <rect key="frame" x="73" y="80" width="150" height="12"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="12" id="1B9-7d-qhe"/>
+                        <constraint firstAttribute="width" constant="150" id="tD2-sr-kau"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="screenName" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IF3-g0-bMu">
+                    <rect key="frame" x="73" y="95" width="150" height="12"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="12" id="iEU-yL-l7f"/>
+                        <constraint firstAttribute="width" constant="150" id="rGo-2Z-iJd"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Hi!" translatesAutoresizingMaskIntoConstraints="NO" id="PkY-3L-cHY">
+                    <rect key="frame" x="12" y="146" width="296" height="200"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="200" id="ljH-GQ-Cd9"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences" keyboardAppearance="alert"/>
+                </textView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="IF3-g0-bMu" firstAttribute="leading" secondItem="aRO-ha-PBx" secondAttribute="trailing" constant="11" id="9e0-Qa-HlY"/>
+                <constraint firstItem="aRO-ha-PBx" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="80" id="HM6-EI-qRz"/>
+                <constraint firstItem="nbu-ab-OSb" firstAttribute="leading" secondItem="aRO-ha-PBx" secondAttribute="trailing" constant="11" id="Jbo-Wl-00o"/>
+                <constraint firstItem="IF3-g0-bMu" firstAttribute="top" secondItem="nbu-ab-OSb" secondAttribute="bottom" constant="3" id="LLw-H6-dj4"/>
+                <constraint firstItem="PkY-3L-cHY" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="12" id="Nf3-TZ-LCb"/>
+                <constraint firstAttribute="trailing" secondItem="PkY-3L-cHY" secondAttribute="trailing" constant="12" id="SFe-RM-1PW"/>
+                <constraint firstItem="PkY-3L-cHY" firstAttribute="top" secondItem="aRO-ha-PBx" secondAttribute="bottom" constant="16" id="X1d-Gt-ZTU"/>
+                <constraint firstItem="nbu-ab-OSb" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="80" id="kAF-hk-eBn"/>
+                <constraint firstItem="aRO-ha-PBx" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="12" id="t1K-bV-N4I"/>
+            </constraints>
+            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
+            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+        </view>
+    </objects>
+</document>

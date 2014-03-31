@@ -7,13 +7,44 @@
 //
 
 #import "AppDelegate.h"
+#import "LoginViewController.h"
+#import "TweetsViewController.h"
+#import "TwitterClient.h"
+#import "User.h"
+
+@implementation NSURL (dictionaryFromQueryString)
+
+- (NSDictionary *)dictionaryFromQueryString
+{
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
+    
+    NSArray *pairs = [[self query] componentsSeparatedByString:@"&"];
+    
+    for(NSString *pair in pairs) {
+        NSArray *elements = [pair componentsSeparatedByString:@"="];
+        
+        NSString *key = [[elements objectAtIndex:0] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSString *val = [[elements objectAtIndex:1] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        
+        [dictionary setObject:val forKey:key];
+    }
+    
+    return dictionary;
+}
+
+@end
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
+    
+    [self setRootViewController];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setRootViewController) name:UserLogInNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setRootViewController) name:UserLogOutNotification object:nil];
+    
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
@@ -45,5 +76,35 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    if ([url.scheme isEqualToString:@"eltwitter"])
+    {
+        if ([url.host isEqualToString:@"oauth"])
+        {
+            NSDictionary *parameters = [url dictionaryFromQueryString];
+            if (parameters[@"oauth_token"] && parameters[@"oauth_verifier"]) {
+                [[TwitterClient instance] requestAccessTokenWithURL:url];
+            }
+        }
+        return YES;
+    }
+    return NO;
+}
+     
+- (void)setRootViewController
+    {
+        if ([User currentUser] != nil) {
+            TweetsViewController *tvc = [[TweetsViewController alloc] init];
+            UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:tvc];
+            nvc.navigationBar.barTintColor = [UIColor colorWithRed:97/255.0 green:131/255.0 blue:188/255.0 alpha:1];
+            nvc.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
+            self.window.rootViewController = nvc;
+            //self.window.rootViewController = [[TweetsViewController alloc] init];
+        } else {
+            self.window.rootViewController = [[LoginViewController alloc] init];
+        }
+    }
 
 @end
