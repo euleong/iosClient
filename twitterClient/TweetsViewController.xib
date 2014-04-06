@@ -21,7 +21,8 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.45565818559999999" green="0.59057780250000003" blue="0.76696246599999995" alpha="1" colorSpace="calibratedRGB"/>
+            <gestureRecognizers/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="kOx-mj-wGc" secondAttribute="bottom" id="EoS-Ay-ybr"/>
                 <constraint firstAttribute="trailing" secondItem="kOx-mj-wGc" secondAttribute="trailing" id="Zy2-WT-wJl"/>

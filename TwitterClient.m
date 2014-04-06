@@ -139,4 +139,15 @@ static NSString * const accessTokenKey = @"accessTokenKey";
     return [self GET:@"1.1/statuses/home_timeline.json" parameters:nil success:success failure:failure];
 }
 
+
+- (AFHTTPRequestOperation *) mentionsWithSuccess:(void (^)(AFHTTPRequestOperation *operation, id response))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
+    return [self GET:@"1.1/statuses/mentions_timeline.json" parameters:nil success:success failure:failure];
+}
+
+- (AFHTTPRequestOperation *) userWithScreenName:(NSString *)screenName success:(void (^)(AFHTTPRequestOperation *operation, id response))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithDictionary:@{@"screen_name": screenName}];
+    return [self GET:@"1.1/users/show.json" parameters:parameters success:success failure:failure];
+}
+
 @end

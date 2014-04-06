@@ -10,6 +10,6 @@
 #import "Tweet.h"
 
 @interface TweetDetailViewController : UIViewController
-
 -(id)initWithTweet:(Tweet *)tweet;
+- (IBAction)onImageTap:(UITapGestureRecognizer *)tapGestureRecognizer;
 @end

@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TweetCell.h"
 
-@interface TweetsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
-
+@interface TweetsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, TweetCellDelegate>
+-(void) setMentions:(BOOL)value;
 @end

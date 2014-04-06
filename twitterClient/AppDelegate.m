@@ -11,6 +11,7 @@
 #import "TweetsViewController.h"
 #import "TwitterClient.h"
 #import "User.h"
+#import "MenuViewController.h"
 
 @implementation NSURL (dictionaryFromQueryString)
 
@@ -96,8 +97,9 @@
 - (void)setRootViewController
     {
         if ([User currentUser] != nil) {
-            TweetsViewController *tvc = [[TweetsViewController alloc] init];
-            UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:tvc];
+            //TweetsViewController *tvc = [[TweetsViewController alloc] init];
+            MenuViewController *mvc = [[MenuViewController alloc] init];
+            UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:mvc];
             nvc.navigationBar.barTintColor = [UIColor colorWithRed:97/255.0 green:131/255.0 blue:188/255.0 alpha:1];
             nvc.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
             self.window.rootViewController = nvc;

@@ -10,6 +10,7 @@
 #import "UIImageView+AFNetworking.h"
 #import "TwitterClient.h"
 #import "NewTweetViewController.h"
+#import "UserProfileViewController.h"
 
 @interface TweetDetailViewController ()
 - (IBAction)onFavorite:(id)sender;
@@ -58,7 +59,10 @@
     self.name.text = self.tweet.data[@"user"][@"name"];
     self.screenName.text = [NSString stringWithFormat:@"@%@",self.tweet.data[@"user"][@"screen_name"]];
     self.tweetText.text = self.tweet.data[@"text"];
-    [self.profileImage setImageWithURL:[NSURL URLWithString:self.tweet.data[@"user"][@"profile_image_url"]] placeholderImage:[UIImage imageNamed:self.name.text]];
+    
+    NSString *originalImageURL = [self.tweet.data[@"user"][@"profile_image_url"] stringByReplacingOccurrencesOfString:@"_normal" withString:@""];
+    [self.profileImage setImageWithURL:[NSURL URLWithString:originalImageURL] placeholderImage:[UIImage imageNamed:self.name.text]];
+    
     self.date.text = [self.tweet absoluteDate];
     
     self.tweet.favorited = [self.tweet.data[@"favorited"] boolValue];
@@ -66,6 +70,11 @@
     
     [self setFavoriteIcon];
     [self setRetweetIcon];
+    
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc]
+                                                    initWithTarget:self action:@selector(onImageTap:)];
+    
+    [self.profileImage addGestureRecognizer:tapGestureRecognizer];
 
     
 }
@@ -131,4 +140,23 @@
         [self.retweetButton setImage:[UIImage imageNamed:@"retweet"] forState:UIControlStateNormal];
     }
 }
+
+- (IBAction)onImageTap:(UITapGestureRecognizer *)tapGestureRecognizer {
+    
+    NSString *screenName = self.tweet.data[@"user"][@"screen_name"];
+    //NSLog(@"Getting profile for:%@", [NSString stringWithFormat:@"%@", screenName]);
+    // can move this somewhere
+    [[TwitterClient instance] userWithScreenName:screenName success:^(AFHTTPRequestOperation *operation, id response) {
+        
+        //NSLog(@"response: %@", response);
+        User *user = [[User alloc] initWithDictionary:response];
+        UserProfileViewController *userProfileViewController = [[UserProfileViewController alloc] initWithUser:user];
+        [self.navigationController pushViewController:userProfileViewController animated:YES];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Failure in retrieving user");
+    }];
+
+}
+
 @end

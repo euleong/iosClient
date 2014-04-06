@@ -25,6 +25,7 @@ static User *currentUser = nil;
     if (self) {
         self.dictionary = dictionary;
     }
+    NSLog(@"dictionary: %@ ", dictionary);
     return self;
 }
 
@@ -66,11 +67,30 @@ static User *currentUser = nil;
 }
 
 - (NSString *)profileImageUrl {
-    return [self.dictionary valueForKeyPath:@"profile_image_url"];
+    NSString *url = [self.dictionary valueForKeyPath:@"profile_image_url"];
+    return [url stringByReplacingOccurrencesOfString:@"_normal" withString:@""];
 }
 
 - (NSString *)screenName {
     return [self.dictionary valueForKeyPath:@"screen_name"];
 }
+
+- (NSString *)backgroundImageUrl {
+    return [self.dictionary valueForKeyPath:@"profile_background_image_url"];
+}
+
+- (NSInteger)followersCount {
+    return [[self.dictionary valueForKey:@"followers_count"] integerValue];
+}
+
+- (NSInteger)friendsCount {
+    //NSLog(@"friends count %@", [self.dictionary valueForKey:@"friends_count"]);
+    return [[self.dictionary valueForKey:@"friends_count"] integerValue];
+}
+
+- (NSInteger)tweetCount {
+    return [[self.dictionary valueForKey:@"statuses_count"] integerValue];
+}
+
 
 @end

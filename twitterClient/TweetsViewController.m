@@ -8,11 +8,11 @@
 
 #import "TweetsViewController.h"
 #import "TwitterClient.h"
-#import "TweetCell.h"
 #import "NewTweetViewController.h"
 #import "TweetDetailViewController.h"
 #import "User.h"
 #import "Tweet.h"
+#import "UserProfileViewController.h"
 
 NSString * const CELL_IDENTIFIER = @"TweetCell";
 NSInteger const TEXT_LABEL_WIDTH = 230;
@@ -25,6 +25,7 @@ NSMutableArray * tweets;
 @interface TweetsViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *tweetsTableView;
 @property (weak, nonatomic) NSMutableArray * tweets;
+@property (assign, nonatomic) BOOL showMentions;
 
 @end
 
@@ -67,13 +68,16 @@ NSMutableArray * tweets;
     [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
     refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Release to refresh"];
     [self.tweetsTableView addSubview:refreshControl];
-
 }
 
 - (void)viewDidAppear:(BOOL)animated {
 
-    // get tweets
-    [self homeTimeline];
+    if (self.showMentions) {
+        [self mentions];
+    }
+    else {
+        [self homeTimeline];
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -86,12 +90,12 @@ NSMutableArray * tweets;
         [cell setValuesWithTweet:tweet];        
     }
 
-    
+    cell.delegate = self;
     return cell;
 }
 
 - (int)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 20;
+    return [tweets count];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -120,6 +124,9 @@ NSMutableArray * tweets;
     // Dispose of any resources that can be recreated.
 }
 
+-(void) setMentions:(BOOL)value {
+    self.showMentions = value;
+}
 
 -(IBAction)onNew:(id)sender
 {
@@ -149,9 +156,40 @@ NSMutableArray * tweets;
 
 }
 
+-(void)mentions{
+    [[TwitterClient instance] mentionsWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        //NSLog(@"response: %@", responseObject);
+        //tweets = responseObject;
+        tweets = [Tweet tweetsArray:responseObject];
+        //NSLog(@"tweets: %@", tweets);
+        [self.tweetsTableView reloadData];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Failure getting mentions: %@", [error description]);
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Failure:" message:@"Could not get mentions!" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:nil];
+        [alert show];
+    }];
+}
+
 - (void)refresh:(UIRefreshControl *)refreshControl {
     [self homeTimeline];
     [refreshControl endRefreshing];
+}
+
+#pragma mark - TweetCellDelegate methods
+-(void)sender:(TweetCell *)sender imageTapped:(NSString *)screenName
+{
+    //NSLog(@"Getting profile for:%@", [NSString stringWithFormat:@"%@", screenName]);
+    [[TwitterClient instance] userWithScreenName:screenName success:^(AFHTTPRequestOperation *operation, id response) {
+        
+       // NSLog(@"response: %@", response);
+        User *user = [[User alloc] initWithDictionary:response];
+        UserProfileViewController *userProfileViewController = [[UserProfileViewController alloc] initWithUser:user];
+        
+        [self.navigationController pushViewController:userProfileViewController animated:YES];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Failure in retrieving user");
+    }];
 }
 
 @end

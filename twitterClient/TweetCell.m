@@ -9,6 +9,11 @@
 #import "TweetCell.h"
 #import "UIImageView+AFNetworking.h"
 #import "Tweet.h"
+#import "UserProfileViewController.h"
+
+@interface TweetCell()
+- (void)imageTapped:(id)sender;
+@end
 
 @implementation TweetCell
 
@@ -19,6 +24,10 @@
     self.name.text = @"";
     self.date.text = @"";
     self.tweetText.text     = @"";
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc]
+                                   initWithTarget:self action:@selector(imageTapped:)];
+    
+    [self.profileImage addGestureRecognizer:tapGestureRecognizer];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
@@ -36,10 +45,15 @@
     
     self.tweetText.text = tweet.data[@"text"];
     
-    [self.profileImage setImageWithURL:[NSURL URLWithString:tweet.data[@"user"][@"profile_image_url"]] placeholderImage:[UIImage imageNamed:self.name.text]];
+    NSString *originalImageURL = [tweet.data[@"user"][@"profile_image_url"] stringByReplacingOccurrencesOfString:@"_normal" withString:@""];
+    [self.profileImage setImageWithURL:[NSURL URLWithString:originalImageURL] placeholderImage:[UIImage imageNamed:self.name.text]];
     
     self.date.text = [tweet relativeTime];//[self formatDateWithString:tweet.data[@"created_at"]];
 
+}
+
+-(void)imageTapped:(id)sender {
+    [self.delegate sender:self imageTapped:self.screenName.text];
 }
 
 @end
