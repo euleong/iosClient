@@ -10,5 +10,5 @@
 #import "TweetCell.h"
 
 @interface TweetsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, TweetCellDelegate>
--(void) setMentions:(BOOL)value;
+- (id)initWithMentions;
 @end

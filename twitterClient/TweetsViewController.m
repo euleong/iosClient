@@ -37,6 +37,19 @@ NSMutableArray * tweets;
     if (self) {
         // Custom initialization
         self.title = @"Home";
+        self.showMentions = NO;
+        
+    }
+    return self;
+}
+
+- (id)initWithMentions
+{
+    self = [super init];
+    if (self) {
+        // Custom initialization
+        self.title = @"Mentions";
+        self.showMentions = YES;
         
     }
     return self;
@@ -47,6 +60,7 @@ NSMutableArray * tweets;
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
     self.tweetsTableView.dataSource = self;
     self.tweetsTableView.delegate = self;
     

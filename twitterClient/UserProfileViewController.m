@@ -37,15 +37,24 @@
 {
     self = [super init];
     if (self) {
+        if (user.screenName == [User currentUser].screenName) {
+            self.title = @"Me";
+        }
+        else {
+            self.title = user.name;
+        }
+
         self.user = user;
     }
-    return self;
+
+     return self;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
+    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationController.title = @"Profile";
     
@@ -55,9 +64,9 @@
     self.screenName.text = [NSString stringWithFormat:@"@%@", self.user.screenName];
     self.name.text = self.user.name;
     
-    self.followers.text = [NSString stringWithFormat:@"%d", self.user.followersCount];
-    self.following.text = [NSString stringWithFormat:@"%d", self.user.friendsCount];
-    self.tweets.text = [NSString stringWithFormat:@"%d", self.user.tweetCount];
+    self.followers.text = [NSString stringWithFormat:@"%d", (int)self.user.followersCount];
+    self.following.text = [NSString stringWithFormat:@"%d", (int)self.user.friendsCount];
+    self.tweets.text = [NSString stringWithFormat:@"%d", (int)self.user.tweetCount];
 
 }
 

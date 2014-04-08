@@ -19,6 +19,8 @@
 @property (weak, nonatomic) IBOutlet UIView *mainContentView;
 @property (strong, nonatomic) TweetsViewController *tweetsViewController;
 @property (nonatomic, strong) UINavigationController *tweetsNavigationController;
+@property (strong, nonatomic) TweetsViewController *mentionsViewController;
+@property (nonatomic, strong) UINavigationController *mentionsNavigationController;
 @property (nonatomic, strong) UserProfileViewController *userProfileViewController;
 @property (nonatomic, strong) UINavigationController *userProfileNavigationController;
 @property (nonatomic, strong) NSArray *menuOptions;
@@ -33,18 +35,26 @@
     if (self) {
         // Custom initialization
         self.menuOptions = @[@"Profile", @"Home", @"Mentions"];
+        UIColor *navigationBarColor = [UIColor colorWithRed:97/255.0 green:131/255.0 blue:188/255.0 alpha:1];
         
         // user profile view
         self.userProfileViewController = [[UserProfileViewController alloc] initWithUser:[User currentUser]];
         self.userProfileNavigationController = [[UINavigationController alloc]
                                            initWithRootViewController:self.userProfileViewController];
+        self.userProfileNavigationController.navigationBar.barTintColor = navigationBarColor;
         
         // home timeline view
         self.tweetsViewController = [[TweetsViewController alloc] init];
         self.tweetsNavigationController = [[UINavigationController alloc]
                                            initWithRootViewController:self.tweetsViewController];
+        self.tweetsNavigationController.navigationBar.barTintColor = navigationBarColor;
         
-        self.viewControllers = @[self.userProfileNavigationController, self.tweetsNavigationController, self.tweetsNavigationController];
+        self.mentionsViewController = [[TweetsViewController alloc] initWithMentions];
+        self.mentionsNavigationController = [[UINavigationController alloc]
+                                           initWithRootViewController:self.mentionsViewController];
+        self.mentionsNavigationController.navigationBar.barTintColor = navigationBarColor;
+        
+        self.viewControllers = @[self.userProfileNavigationController, self.tweetsNavigationController, self.mentionsNavigationController];
     }
     return self;
 }
@@ -68,8 +78,10 @@
     // main view
     // add tweets home timeline to the main view, which can be dragged away
     [self.mainContentView addSubview:self.tweetsNavigationController.view];
-    [self.mainContentView bringSubviewToFront:self.tweetsNavigationController.view];
     [self.view bringSubviewToFront:self.mainContentView];
+    
+    self.navigationController.navigationBar.hidden = YES;
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -109,17 +121,8 @@
     
     // move main display view back
     [self displayMainContentView];
-    
-    // get only mentions from tweets, find better way
-    if (indexPath.row == 2) {
-        [self.tweetsViewController setMentions:YES];
-    }
-    else {
-        [self.tweetsViewController setMentions:NO];
-    }
-    
+        
     UINavigationController *nvc = self.viewControllers[indexPath.row];
-    [nvc.view removeFromSuperview];
     [nvc popToRootViewControllerAnimated:NO];
     [self.mainContentView addSubview:nvc.view];
     [self.mainContentView bringSubviewToFront:nvc.view];
